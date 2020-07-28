@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.PerformanceAI.API.Extensions;
 using Microsoft.PerformanceAI.API.Proxies.Dtos;
 using Microsoft.PerformanceAI.API.Types;
 using System;
@@ -14,7 +15,7 @@ namespace Microsoft.PerformanceAI.API.Proxies
     public class BingMapsProxy : BaseProxy, IMapsProxy
     {
         private const string URL_TEMPLATE = "Elevation/List?points={0}&key={1}";
-        private const int MAX_PAGE_SIZE = 1024;
+        private const int MAX_PAGE_SIZE = 25;
 
         private readonly BingMapsSettings bingMapsSettings;
 
@@ -27,25 +28,33 @@ namespace Microsoft.PerformanceAI.API.Proxies
         public async Task<IEnumerable<Coordinates3d>> GetElevation(IEnumerable<Coordinate> coordinates)
         {
             this.Logger.LogInformation("Entering Bing Maps Proxy");
-            var targetUrl = this.ConstructUrl(coordinates);
-            this.Logger.LogInformation("Invocing {0}", targetUrl);
-            var response = await this.HttpClient.GetAsync(targetUrl);
+            var partitionedList = coordinates.Partition(MAX_PAGE_SIZE).ToList();
+            var ammendedCoordianteList = new List<int>();
 
-            if (!response.IsSuccessStatusCode)
+            //TODO: this can be optimazed further by implementing Task.WhenAll.
+            var partitionIndex = 0;
+            foreach (var partition in partitionedList)
             {
-                var msg = $"Error contacting Bing Maps API. Status code {response.StatusCode}. Error: {response.ReasonPhrase}.";
-                this.Logger.LogError(msg);
-                throw new Exception(msg);
+                var targetUrl = this.ConstructUrl(partition);
+                this.Logger.LogInformation("Invoking {0} for partition index {1}.", targetUrl, partitionIndex);
+                var response = await this.HttpClient.GetAsync(targetUrl);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var msg = $"Error contacting Bing Maps API. Status code {response.StatusCode}. Error: {response.ReasonPhrase}.";
+                    this.Logger.LogError(msg);
+                    throw new Exception(msg);
+                }
+
+                this.Logger.LogInformation("Desrialization of Bing Maps response.");
+                var elevationData = await this.ReadResponse(response);
+                ammendedCoordianteList.AddRange(elevationData?.ResourceSets?[0].Resources?[0].Elevations);
+                partitionIndex++;
             }
 
-            this.Logger.LogInformation("Response status is OK");
-
-            this.Logger.LogInformation("Desrialization of Bing Maps response.");
-            var elevationData = await this.ReadResponse(response);
-
             var ammendedCoordiantes = this.AmmendCoordinates(
-                (List<Coordinate>)coordinates,
-                elevationData?.ResourceSets?[0].Resources?[0].Elevations);
+                (List<Coordinate>)coordinates, 
+                ammendedCoordianteList);
 
             return ammendedCoordiantes;
         }
