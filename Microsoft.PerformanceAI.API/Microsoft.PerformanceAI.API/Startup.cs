@@ -25,7 +25,7 @@ namespace Microsoft.PerformanceAI.API
             services.AddHttpClient();
             services.Configure<BingMapsSettings>(Configuration.GetSection("BingMaps"));
             services.AddScoped<IVanillaParserService, VanillaParserService>();
-            services.AddScoped<IBingMapsProxy, BingMapsProxy>();
+            services.AddScoped<IMapsProxy, BingMapsProxy>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
