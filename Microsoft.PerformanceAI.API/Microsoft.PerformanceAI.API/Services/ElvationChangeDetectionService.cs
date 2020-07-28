@@ -5,11 +5,10 @@ using System.Collections.Generic;
 
 namespace Microsoft.PerformanceAI.API.Services
 {
-    public class ElvationDetectionService
+    public class ElvationChangeDetectionService : IElvationChangeDetectionService
     {
-        public IEnumerable<Elevation> DetectSteepElevation(IEnumerable<Coordinates3d> coordinates)
+        public IEnumerable<Elevation> DetectSteepElevation(IEnumerable<Coordinates3d> coordinates, int threshold)
         {
-
             var list = coordinates.AsList();
             var elevationList = new List<Elevation>();
             Coordinates3d start, end;
@@ -19,6 +18,7 @@ namespace Microsoft.PerformanceAI.API.Services
             {
                 if (index == 0)
                 {
+                    index++;
                     continue;
                 }
 
@@ -34,7 +34,7 @@ namespace Microsoft.PerformanceAI.API.Services
                 var isDownhill = currentChangeInElevation < 0;
 
                 // As long as elevation continues in the same directon we i.e. 6,3,2,1 we increases index.
-                while (((list[index].Elevation - list[index - 1].Elevation < 0) == isDownhill) && index < list.Count)
+                while (index < list.Count - 1 && ((list[index].Elevation - list[index - 1].Elevation < 0) == isDownhill))
                 {
                     index++;
                 }
@@ -42,14 +42,18 @@ namespace Microsoft.PerformanceAI.API.Services
                 end = list[index];
 
                 var elevationLength = this.CalculateDistance(start.Lat, start.Long, end.Lat, end.Long);
-                elevationList.Add(
-                    new Elevation
+                var tempEevation = new Elevation
                 {
                     IsDownHill = isDownhill,
                     Start = start,
                     End = end,
-                    Length = Convert.ToInt32(elevationLength)
-                });
+                    Length = elevationLength
+                };
+
+                if (tempEevation.ElevationChange >= threshold)
+                {
+                    elevationList.Add(tempEevation);
+                }
 
                 index++;
             }

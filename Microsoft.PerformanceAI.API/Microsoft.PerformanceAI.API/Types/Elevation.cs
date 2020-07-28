@@ -1,4 +1,6 @@
-﻿namespace Microsoft.PerformanceAI.API.Types
+﻿using System;
+
+namespace Microsoft.PerformanceAI.API.Types
 {
     public class Elevation
     {
@@ -9,10 +11,22 @@
         /// <summary>
         /// Length in meters.
         /// </summary>
-        public int Length;
-
-        public int Angle;
+        public double Length;
 
         public bool IsDownHill;
+
+        public int ElevationChange
+        {
+            get
+            {
+                var change = 0;
+                if (this.Start != null && this.End != null)
+                {
+                    change = Math.Abs(this.Start.Elevation - this.End.Elevation);
+                }
+
+                return change;
+            }
+        }
     }
 }

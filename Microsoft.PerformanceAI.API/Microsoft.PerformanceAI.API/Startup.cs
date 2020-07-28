@@ -25,6 +25,7 @@ namespace Microsoft.PerformanceAI.API
             services.AddHttpClient();
             services.Configure<BingMapsSettings>(Configuration.GetSection("BingMaps"));
             services.AddScoped<IVanillaParserService, VanillaParserService>();
+            services.AddScoped<IElvationChangeDetectionService, ElvationChangeDetectionService>();
             services.AddScoped<IMapsProxy, BingMapsProxy>();
         }
 

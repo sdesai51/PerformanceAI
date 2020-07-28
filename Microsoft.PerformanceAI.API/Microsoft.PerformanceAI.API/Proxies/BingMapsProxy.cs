@@ -68,7 +68,6 @@ namespace Microsoft.PerformanceAI.API.Proxies
                 coordinates = coordinates.TakeLast(MAX_PAGE_SIZE);
             }
 
-
             var coorsinatesString = string.Join(SEPARATOR, coordinates.Select(c => c.ToString()));
             return this.bingMapsSettings.BaseUrl + string.Format(URL_TEMPLATE, coorsinatesString, this.bingMapsSettings.Key);
         }
