@@ -84,8 +84,9 @@ namespace Microsoft.PerformanceAI.API.Services
 
                 dist = Math.Acos(dist);
                 dist = this.ConvertRadianToDecimal(dist);
-                dist = dist * 60 * 1.1515;
-
+                dist = dist * 60 * 1.1515; // Miles.
+                dist = dist * 1.609344; // Converting to KM.
+                dist = dist * 1000; // Converting to meters.
                 return (dist);
             }
         }
