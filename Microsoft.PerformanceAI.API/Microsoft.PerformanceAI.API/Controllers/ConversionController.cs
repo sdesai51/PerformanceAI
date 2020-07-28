@@ -3,7 +3,6 @@ using Microsoft.PerformanceAI.API.Services;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Microsoft.PerformanceAI.API.Controllers
 {
     [Route("api/[controller]")]
@@ -11,8 +10,13 @@ namespace Microsoft.PerformanceAI.API.Controllers
     public class ConversionController : ControllerBase
     {
         private readonly IBingMapsService bingService;
+        private readonly IVanillaParserService vanillaParserService;
 
-        public ConversionController(IBingMapsService bingService) => this.bingService = bingService;
+        public ConversionController(IVanillaParserService vanillaParserService, IBingMapsService bingService)
+        {
+            this.bingService = bingService;
+            this.vanillaParserService = vanillaParserService;
+        }
 
         [HttpPost]
         public async Task<ActionResult<string>> Post(string value)

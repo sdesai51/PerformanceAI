@@ -1,9 +1,9 @@
 ﻿using Microsoft.PerformanceAI.API.Types;
 using System.Collections.Generic;
 
-namespace Microsoft.PerformanceAI.API.Services
+namespace Microsoft.PerformanceAI.API.Proxies
 {
-    public interface IBingMapsService
+    public interface IBingMapsProxy
     {
         IEnumerable<Coordinate> GetElevation(IEnumerable<Coordinate> coordinates);
     }
