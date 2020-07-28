@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.PerformanceAI.API.Proxies;
 using Microsoft.PerformanceAI.API.Services;
+using Microsoft.PerformanceAI.API.Types;
 
 namespace Microsoft.PerformanceAI.API
 {
@@ -21,7 +23,10 @@ namespace Microsoft.PerformanceAI.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient();
-            services.AddScoped<IBingMapsService, BingMapsService>();
+            services.Configure<BingMapsSettings>(Configuration.GetSection("BingMaps"));
+            services.AddScoped<IVanillaParserService, VanillaParserService>();
+            services.AddScoped<IElvationChangeDetectionService, ElvationChangeDetectionService>();
+            services.AddScoped<IMapsProxy, BingMapsProxy>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

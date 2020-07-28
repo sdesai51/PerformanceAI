@@ -1,26 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.PerformanceAI.API.Proxies;
 using Microsoft.PerformanceAI.API.Services;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-
 namespace Microsoft.PerformanceAI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ConversionController : ControllerBase
+    public class ConversionController : PerformanceBaseController<ConversionController>
     {
-        private readonly IBingMapsService bingService;
+        private readonly IMapsProxy mapService;
+        private readonly IVanillaParserService vanillaParserService;
 
-        public ConversionController(IBingMapsService bingService) => this.bingService = bingService;
+        public ConversionController(
+            IVanillaParserService vanillaParserService,
+            IMapsProxy mapService,
+            ILogger<ConversionController> logger) : base(logger)
+        {
+            this.mapService = mapService;
+            this.vanillaParserService = vanillaParserService;
+        }
 
         [HttpPost]
-        public async Task<ActionResult<string>> Post(string value)
+        public async Task<ActionResult<string>> Post()
         {
-            using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
-            {
-                return await reader.ReadToEndAsync();
-            }
+            this.logger.LogInformation("Entering controller method.");
+            var postBody = await this.GetPostBody();
+
+            var vanillaCoordinates = this.vanillaParserService.ExtractCoordinates(postBody);
+            var ammendedCoordinates = await this.mapService.GetElevation(vanillaCoordinates);
+
+            this.logger.LogInformation("Exiting controller method.");
+            return this.Ok(ammendedCoordinates);
         }
     }
 }
