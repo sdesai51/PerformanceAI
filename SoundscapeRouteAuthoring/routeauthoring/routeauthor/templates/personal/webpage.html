@@ -19,20 +19,60 @@
 
  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-<!-- <link rel="stylesheet" href="(% static 'css/home_style.css' %}">
+<!-- <script type="text/javascript" src="{%static 'webpage.js' %}"></script> -->
+<!-- <script id="xml" type="text/xml" src="{%static 'soundscapetest3.gpx'%}"></script> -->
 
-<script type="text/javascript" src="{% static 'js/home_script.js' %}"></script> -->
+
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems, options);
   });
 
+
   // Or with jQuery
+
 
   $(document).ready(function(){
     $('.collapsible').collapsible();
   });
+  function readXml(){
+    var request = new XMLHttpRequest();
+    request.open("GET", "{%static 'soundscapetest3.xml'%}", false);
+    request.send();
+    var xml = request.responseXML;
+    // console.log(xml);
+    var wpts = xml.getElementsByTagName("wpt");
+    console.log(wpts);
+    return wpts;
+  }
+
+  function populatePreviewHeaders() {
+    //Retreieves data from XML document and places in Javascript objects
+    wpts = readXml();
+    var names = new Array(wpts.length);
+    var descriptions = new Array(wpts.length);
+    var elevations = new Array(wpts.length);
+    var longitudes = new Array(wpts.length);
+    var latitudes = new Array(wpts.length);
+
+
+    for(var i=0; i < wpts.length; i++){
+      var wpt = wpts[i];
+      document.getElementsByTagName("ul")[0].innerHTML += `<li><div id="header${i}" class="collapsible-header"></div><div id="body${i}" class="collapsible-body"><span></span></div></li>`;
+      var nameValue = wpt.getElementsByTagName("name")[0].childNodes[0].nodeValue;
+      document.getElementById(`header${i}`).innerHTML = nameValue; 
+      var descriptionValue = wpt.getElementsByTagName("desc")[0].childNodes[0].nodeValue;
+      var elevationValue = wpt.getElementsByTagName("ele")[0].childNodes[0].nodeValue;
+      var longitudeValue = wpt.getAttribute("lon");
+      var latitudeValue = wpt.getAttribute("lat");
+      document.getElementById(`body${i}`).innerHTML =  "Description:" + descriptionValue + "<br><br> Elevation:" + elevationValue + "<br><br> Longitude:" + longitudeValue + "<br><br> Latitude:" + latitudeValue;
+      
+    }    
+  }
+
+
 </script>
 
 
@@ -49,18 +89,6 @@
 
         <a href="#" class="brand-logo center">PerformanceAI</a>
 
-        <!-- <ul id="nav-mobile" class="left hide-on-med-and-down">
-
-          <li><a href="tutorials4.html">Helpful Hints</a></li>
-
-        </ul>
-
-        <ul id = "nav-mobile" class="right hide-on-med-and-down">
-
-          <li><a href="login.html">Log In</a></li>
-
-        </ul> -->
-
       </div>
 
     </nav>
@@ -69,7 +97,7 @@
     <h3>Route Planner</h3>
 
     <div class="row">
-        <div class="col s6">
+        <div class="col s5">    
     <p>
         <label>
           <input type="checkbox" class="filled-in" checked="checked" />
@@ -105,16 +133,20 @@
               </div>
            </div>
         </form>   
-        <a class="waves-effect waves-light btn-large">Generate Experience</a>    
+      <a class="waves-effect waves-light btn-large" onclick="populatePreviewHeaders()" >Generate Experience</a>    
      </div>
     </div>
+    <div class="col s1">
+
+    </div>
     <div class="col s6">
-        <div class="preview-box">
-        <h4>Preview</h4>
+        <div class="preview-box" style = " border:5px solid #26a69a; padding-right:20px; padding-left:20px; padding-bottom:20px;">
+        <p style="font-size: 20px;">Preview</p>
 
         <ul class="collapsible">
-            <li>
-              <div class="collapsible-header">Elevation Marker 1</div>
+          <!-- this is our menu of collapsible items -->
+            <!-- <li>
+              <div id = "first-header" class="collapsible-header">Elevation Marker 1</div>
               <div class="collapsible-body"><span></span></div>
             </li>
             <li>
@@ -124,10 +156,12 @@
             <li>
               <div class="collapsible-header">Sharp Bend</div>
               <div class="collapsible-body"><span></span></div>
-            </li>
+            </li> -->
           </ul>
         </div>
-         <a class="waves-effect waves-light btn-small">Post Experience</a>
+        <br>
+        <br>
+         <a class="waves-effect waves-light btn-large">Post Experience</a>
     </div>
 </div>
 </body>
