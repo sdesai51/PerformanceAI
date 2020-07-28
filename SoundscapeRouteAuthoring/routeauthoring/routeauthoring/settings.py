@@ -36,12 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-<<<<<<< HEAD
     'django.contrib.staticfiles'
-=======
-    'django.contrib.staticfiles',
-    'rest_framework',
->>>>>>> a5c087cedb1d1e8c016a8ef1444b8c162b76ee03
+
 ]
 
 MIDDLEWARE = [
@@ -123,3 +119,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
