@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.PerformanceAI.API.Proxies;
 using Microsoft.PerformanceAI.API.Services;
 using System.IO;
 using System.Text;
@@ -9,10 +10,10 @@ namespace Microsoft.PerformanceAI.API.Controllers
     [ApiController]
     public class ConversionController : ControllerBase
     {
-        private readonly IBingMapsService bingService;
+        private readonly IBingMapsProxy bingService;
         private readonly IVanillaParserService vanillaParserService;
 
-        public ConversionController(IVanillaParserService vanillaParserService, IBingMapsService bingService)
+        public ConversionController(IVanillaParserService vanillaParserService, IBingMapsProxy bingService)
         {
             this.bingService = bingService;
             this.vanillaParserService = vanillaParserService;

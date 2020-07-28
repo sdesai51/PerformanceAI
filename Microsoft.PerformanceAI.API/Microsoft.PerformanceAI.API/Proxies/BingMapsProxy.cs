@@ -1,4 +1,5 @@
-﻿using Microsoft.PerformanceAI.API.Types;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.PerformanceAI.API.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,13 @@ namespace Microsoft.PerformanceAI.API.Proxies
         private const string URL_TEMPLATE = "http://dev.virtualearth.net/REST/v1/Elevation/List?points={0}&key={1}";
         private const int MAX_PAGE_SIZE = 1024;
 
-        private readonly string AuthKey;
+        private readonly BingMapsSettings bingMapsSettings;
 
-        public BingMapsProxy(IHttpClientFactory httpClientFactory, string authKey) : base(httpClientFactory) =>
-            this.AuthKey = authKey ?? throw new ArgumentNullException(nameof(authKey));
-
+        public BingMapsProxy(IHttpClientFactory httpClientFactory, IOptions<BingMapsSettings> settings) : base(httpClientFactory)
+        {
+            var optionSettings = settings ?? throw new ArgumentNullException(nameof(settings));
+            this.bingMapsSettings = optionSettings.Value;
+        }
         public IEnumerable<Coordinate> GetElevation(IEnumerable<Coordinate> coordinates)
         {
             return new List<Coordinate>();
@@ -30,7 +33,7 @@ namespace Microsoft.PerformanceAI.API.Proxies
             }
 
             var coorsinatesString = string.Join(",", coordinates);
-            return string.Format(URL_TEMPLATE, coordinates, this.AuthKey);
+            return string.Format(URL_TEMPLATE, coordinates, this.bingMapsSettings.Key);
         }
     }
 }
