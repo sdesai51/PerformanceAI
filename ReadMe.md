@@ -11,6 +11,7 @@ py -m pip install django-storages==1.7.1
 py -m pip install Pillow==6.1.0  
 py -m pip install django-crispy-forms==1.7.2  
 py -m pip install psycopg2==2.8.3  
+py -m pip install requests
 
 
 Django
