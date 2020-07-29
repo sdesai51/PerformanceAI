@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-import modules.api
+from modules.api import *
 
 
 def index(request):
@@ -13,4 +13,5 @@ def index(request):
 def handle_uploaded_gpx(file, filename):
     print(filename)
     content = file.read()
-    print(content)
+    positionData = callConversionApi(content)
+    elevationSegments = callElevationApi(positionData)
