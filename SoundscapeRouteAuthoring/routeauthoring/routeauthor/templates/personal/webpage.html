@@ -37,6 +37,8 @@
   $(document).ready(function(){
     $('.collapsible').collapsible();
   });
+
+  // parses a (hardcoded) XML file into Javascript object and renders those objects into HTML and the Preview section dynamically
   function readXml(){
     var request = new XMLHttpRequest();
     request.open("GET", "{%static 'soundscapetest3.xml'%}", false);
@@ -148,25 +150,18 @@
         <ul class="collapsible">
           {% for item in json_data %}
           <li>
-            <div id = "first-header" class="collapsible-header"></div>
-            <div class="collapsible-body"><span></span></div>
-          </li>
-          {% endfor %}
-          <!-- this is our menu of collapsible items -->
-            <!-- <li>
-              <div id = "first-header" class="collapsible-header">Elevation Marker 1</div>
-              <div class="collapsible-body"><span></span></div>
-            </li>
-            <li>
-              <div class="collapsible-header">Elevation Marker 2</div>
-              <div class="collapsible-body"><span></span></div>
-            </li>
-            <li>
-              <div class="collapsible-header">Sharp Bend</div>
-              <div class="collapsible-body"><span></span></div>
-            </li> -->
-          </ul>
-        </div>
+          <div id = "first-header" class="collapsible-header">{{item.title}}</div>
+            <div class="collapsible-body"><span>
+              Longitude: {{item.start.long}}
+              <br>
+              Latitude: {{item.start.lat}}
+              <br>
+              Elevation: {{item.start.elevation}}
+              </span></div>
+              </li>
+              {% endfor %}
+        </ul>
+    </div>
         <br>
         <br>
          <a class="waves-effect waves-light btn-large">Post Experience</a>
