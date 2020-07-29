@@ -7,7 +7,7 @@ namespace Microsoft.PerformanceAI.API.Services
 {
     public class ElvationChangeDetectionService : IElvationChangeDetectionService
     {
-        public IEnumerable<Elevation> DetectSteepElevation(IEnumerable<Coordinates3d> coordinates, int threshold)
+        public IEnumerable<Elevation> DetectSteepElevation(IEnumerable<Coordinates3d> coordinates, int? minChange, int? minAngle)
         {
             var list = coordinates.AsList();
             var elevationList = new List<Elevation>();
@@ -45,7 +45,8 @@ namespace Microsoft.PerformanceAI.API.Services
                     Length = elevationLength
                 };
 
-                if (tempEevation.ElevationChange >= threshold)
+                if ((!minChange.HasValue || tempEevation.ElevationChange >= minChange.Value) &&
+                    (!minAngle.HasValue || tempEevation.Angle >= minAngle.Value))
                 {
                     elevationList.Add(tempEevation);
                 }
