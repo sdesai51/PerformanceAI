@@ -44,7 +44,7 @@ namespace Microsoft.PerformanceAI.API.Tests
                 }
             };
 
-            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1);
+            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1,0);
             Assert.AreEqual(1, elevations.Count());
 
             var elevation = elevations.First();
@@ -77,7 +77,7 @@ namespace Microsoft.PerformanceAI.API.Tests
                 },
             };
 
-            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1);
+            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1,0);
             Assert.AreEqual(1, elevations.Count());
 
             var fist = elevations.First();
@@ -104,7 +104,7 @@ namespace Microsoft.PerformanceAI.API.Tests
                 }
             };
 
-            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1);
+            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1,0);
             var firstElevation = elevations.First();
             Assert.AreEqual(87.31, firstElevation.Angle);
         }

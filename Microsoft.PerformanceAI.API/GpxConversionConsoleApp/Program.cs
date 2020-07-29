@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using MKCoolsoft.GPXLib;
+﻿using MKCoolsoft.GPXLib;
 using SoundscapeGpx;
 using SoundscapeGpx.Models;
+using System;
+using System.Collections.Generic;
 
 namespace GpxConversionConsoleApp
 {
@@ -15,69 +14,70 @@ namespace GpxConversionConsoleApp
         static void Main(string[] args)
         {
             WriteSoundscapeXmlTest();
-
         }
 
         private static void WriteSoundscapeXmlTest()
         {
-            SoundscapeWayPoint point1 = new SoundscapeWayPoint(
-                "Cemetry Junction",
-                "A junction between two large roads in Reading, the name references the large cemetery whose entrance is at this junction",
-                "WayPoint",
-                51.452833, // lat
-                -0.948861, // long
-                9,
-                "Cemetery Junction, Reading");
+            var point1 = new SoundscapeWayPoint
+            {
+                Name = "Cemetry Junction",
+                Description = "A junction between two large roads in Reading, the name references the large cemetery whose entrance is at this junction",
+                Type = "WayPoint",
+                Latitude = 51.452833, // lat
+                Longitude = -0.948861, // long
+                Elevation = 9,
+                Street = "Cemetery Junction, Reading"
+            };
 
-            SoundscapeWayPoint point2 = new SoundscapeWayPoint(
-                "North end of Donnington Road",
-                "North end of Donnington Road",
-                "WayPoint",
-                51.452405, // lat
-                -0.952123, // long
-                9,
-                "North end of Donnington Road");
+            var point2 = new SoundscapeWayPoint
+            {
+                Name = "North end of Donnington Road",
+                Description = "North end of Donnington Road",
+                Type = "WayPoint",
+                Latitude = 51.452405, // lat
+                Longitude = -0.952123, // long
+                Elevation = 9,
+                Street = "North end of Donnington Road"
+            };
 
-            SoundscapeWayPoint point3 = new SoundscapeWayPoint(
-                "Donnington Cars",
-                "Donnington Cars",
-                "WayPoint",
-                51.449737, // lat
-                -0.950664, // long
-                9,
-                "Donnington Cars");
+            SoundscapeWayPoint point3 = new SoundscapeWayPoint
+            {
+                Name = "Donnington Cars",
+                Description = "Donnington Cars",
+                Type = "WayPoint",
+                Latitude = 51.449737, // lat
+                Longitude = -0.950664, // long
+                Elevation = 9,
+                Street = "Donnington Cars"
+            };
 
-            List<SoundscapeWayPoint> waypoints = new List<SoundscapeWayPoint>()
+            var waypoints = new List<SoundscapeWayPoint>
             {
                 point1,
                 point2,
                 point3
             };
 
-            ExperienceMetadata metadata = new ExperienceMetadata()
+            var metadata = new ExperienceMetadata
             {
-                name = "Frazier's test route in Reading",
-                description = "Route for testing the scavenger hunt in Reading",
-                author = "QA Team",
-                startTime = new DateTime(2019, 11, 01, 11, 52, 51),
-                endTime = new DateTime(2021, 01, 01, 11, 53, 52),
-                regionLatitude = 51.4502463333333333,
-                regionLongitude = -0.94847866666666666667,
-                regionRadius = 2000.00,
-                waypoints = waypoints,
-                locale = "en_us",
-                behaviour = "ScavengerHunt",
-                creationTime = DateTime.UtcNow,
-                identifier = "c713e0b491e74468b5600312291018f8"
+                Name = "Frazier's test route in Reading",
+                Description = "Route for testing the scavenger hunt in Reading",
+                Author = "QA Team",
+                StartTime = new DateTime(2019, 11, 01, 11, 52, 51),
+                EndTime = new DateTime(2021, 01, 01, 11, 53, 52),
+                RegionLatitude = 51.4502463333333333,
+                RegionLongitude = -0.94847866666666666667,
+                RegionRadius = 2000.00,
+                Waypoints = waypoints,
+                Locale = "en_us",
+                Behaviour = "ScavengerHunt",
+                CreationTime = DateTime.UtcNow,
+                Identifier = "c713e0b491e74468b5600312291018f8"
             };
 
-            SoundscapeGpxBuilder builder = new SoundscapeGpxBuilder(metadata);
-
-
+            var builder = new SoundscapeGpxBuilder(metadata);
             var doc = builder.ExportToGpx();
-
             Console.WriteLine(doc.ToString());
-
         }
 
         private void TestingGpxLib()
