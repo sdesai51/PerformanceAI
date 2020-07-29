@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-{% load staticfiles %}
 <html>
 
 <head>
@@ -25,8 +24,9 @@
 
 
 <script>
+  
   document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.collapsible');
+    var elems = document.querySeelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems, options);
   });
 
@@ -50,6 +50,7 @@
 
   function populatePreviewHeaders() {
     //Retreieves data from XML document and places in Javascript objects
+    console.log("The data is" + '{{json_data}}');
     wpts = readXml();
     var names = new Array(wpts.length);
     var descriptions = new Array(wpts.length);
@@ -118,12 +119,13 @@
     </p>
     
     <div class = "row">
-        <form class = "col s12">
+      <form class = "col s12" action="{{ request.build_absolute_uri }}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
            <div class = "row">
               <div class = "file-field input-field">
                  <div class = "btn">
                     <span>Upload GPX File</span>
-                    <input type = "file" />
+                    <input type = "file" name="uploadedGpx"/>
                  </div>
                  
                  <div class = "file-path-wrapper">
@@ -132,8 +134,8 @@
                  </div>
               </div>
            </div>
-        </form>   
-      <a class="waves-effect waves-light btn-large" onclick="populatePreviewHeaders()" >Generate Experience</a>    
+           <button type="submit" value="Upload File" class="waves-effect waves-light btn-large">Generate Experience</button>
+        </form>
      </div>
     </div>
     <div class="col s1">
@@ -144,6 +146,12 @@
         <p style="font-size: 20px;">Preview</p>
 
         <ul class="collapsible">
+          {% for item in json_data %}
+          <li>
+            <div id = "first-header" class="collapsible-header"></div>
+            <div class="collapsible-body"><span></span></div>
+          </li>
+          {% endfor %}
           <!-- this is our menu of collapsible items -->
             <!-- <li>
               <div id = "first-header" class="collapsible-header">Elevation Marker 1</div>
