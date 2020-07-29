@@ -34,5 +34,14 @@ namespace Microsoft.PerformanceAI.API.Controllers
                     PropertyNameCaseInsensitive = true
                 });
         }
+
+        protected async Task<K> GetPostBodyAsTypeNewtonsoft<K>()
+        {
+            using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
+            {
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<K>(await reader.ReadToEndAsync());
+            }
+        }
+
     }
 }
