@@ -2,23 +2,18 @@
 {
     public class SoundscapeWayPoint
     {
-        public string name;
-        public string description;
-        public string type;
-        public double longitude;
-        public double latitude;
-        public decimal elevation;
-        public string street;
+        public string Name { get; set; }
 
-        public SoundscapeWayPoint(string name, string description, string type, double latitude, double longitude, decimal elevation, string street)
-        {
-            this.name = name;
-            this.description = description;
-            this.type = type;
-            this.longitude = longitude;
-            this.latitude = latitude;
-            this.elevation = elevation;
-            this.street = street;
-        }
+        public string Description { get; set; }
+
+        public string Type { get; set; }
+
+        public double Longitude { get; set; }
+
+        public double Latitude { get; set; }
+
+        public decimal Elevation { get; set; }
+
+        public string Street { get; set; }
     }
 }

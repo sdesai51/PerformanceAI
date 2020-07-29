@@ -23,7 +23,7 @@ namespace Microsoft.PerformanceAI.API.Controllers
         {
             this.logger.LogInformation("Entering controller method.");
 
-            var postBody = await this.GetPostBodyAsTypeNewtonsoft<ExperienceMetadata>();
+            var postBody = await this.GetPostBodyAsType<ExperienceMetadata>();
             var gpx = this.soundscapeGpxService.BuildSoundscapeGpx(postBody);
 
             this.logger.LogInformation("Exiting controller method.");

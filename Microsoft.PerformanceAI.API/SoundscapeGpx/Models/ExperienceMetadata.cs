@@ -5,18 +5,30 @@ namespace SoundscapeGpx.Models
 {
     public class ExperienceMetadata
     {
-        public string name;
-        public string description;
-        public string author;
-        public DateTime creationTime;
-        public DateTime startTime;
-        public DateTime endTime;
-        public string identifier;
-        public double regionLatitude;
-        public double regionLongitude;
-        public double regionRadius;
-        public string locale;
-        public string behaviour;
-        public IEnumerable<SoundscapeWayPoint> waypoints;
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public string Author { get; set; }
+
+        public DateTime CreationTime { get; set; }
+
+        public DateTime StartTime { get; set; }
+
+        public DateTime EndTime { get; set; }
+
+        public string Identifier { get; set; }
+
+        public double RegionLatitude { get; set; }
+
+        public double RegionLongitude { get; set; }
+
+        public double RegionRadius { get; set; }
+
+        public string Locale { get; set; }
+
+        public string Behaviour { get; set; }
+
+        public IEnumerable<SoundscapeWayPoint> Waypoints { get; set; }
     }
 }
