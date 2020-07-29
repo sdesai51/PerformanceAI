@@ -16,13 +16,7 @@ namespace Microsoft.PerformanceAI.API.Services
             var index = 0;
             do
             {
-                if (index == 0)
-                {
-                    index++;
-                    continue;
-                }
-
-                var currentChangeInElevation = list[index].Elevation - list[index - 1].Elevation;
+                var currentChangeInElevation = list[index].Elevation - (index == 0 ? list[index].Elevation : list[index - 1].Elevation);
                 if (currentChangeInElevation == 0)
                 {
                     // It's flat.
@@ -30,16 +24,17 @@ namespace Microsoft.PerformanceAI.API.Services
                     continue;
                 }
 
-                start = list[index];
+                start = list[index - 1];
                 var isDownhill = currentChangeInElevation < 0;
 
                 // As long as elevation continues in the same directon we i.e. 6,3,2,1 we increases index.
-                while (index < list.Count - 1 && ((list[index].Elevation - list[index - 1].Elevation < 0) == isDownhill))
+                while (index < list.Count &&
+                    ((list[index].Elevation - list[index - 1].Elevation < 0) == isDownhill))
                 {
                     index++;
                 }
 
-                end = list[index];
+                end = list[index - 1];
 
                 var elevationLength = this.CalculateDistance(start.Lat, start.Long, end.Lat, end.Long);
                 var tempEevation = new Elevation

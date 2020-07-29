@@ -44,7 +44,7 @@ namespace Microsoft.PerformanceAI.API.Tests
                 }
             };
 
-            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes);
+            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1);
             Assert.AreEqual(1, elevations.Count());
 
             var elevation = elevations.First();
@@ -52,6 +52,7 @@ namespace Microsoft.PerformanceAI.API.Tests
             Assert.AreEqual(4, elevation.End.Elevation);
             Assert.AreNotEqual(0, elevation.Length);
             Assert.IsFalse(elevation.IsDownHill);
+            Assert.AreEqual(1.65, elevation.Angle);
         }
 
         [TestMethod]
@@ -76,8 +77,59 @@ namespace Microsoft.PerformanceAI.API.Tests
                 },
             };
 
-            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes);
+            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1);
             Assert.AreEqual(1, elevations.Count());
+
+            var fist = elevations.First();
+            Assert.AreEqual(5, fist.ElevationChange);
+            Assert.AreEqual(0.71, fist.Angle);
+        }
+
+        [TestMethod]
+        public void UnitTest_ElvationChangeDetectionService_One_Climb()
+        {
+            var coordintes = new List<Coordinates3d>
+            {
+                new Coordinates3d
+                {
+                    Lat = 53.38349,
+                    Long = -6.09966,
+                    Elevation = 10
+                },
+                new Coordinates3d
+                {
+                    Lat = 53.383160,
+                    Long = -6.099228,
+                    Elevation = 1000
+                }
+            };
+
+            var elevations = this.elvationDetectionService.DetectSteepElevation(coordintes, 1);
+            var firstElevation = elevations.First();
+            Assert.AreEqual(87.31, firstElevation.Angle);
+        }
+
+        [TestMethod]
+        public void UnitTest_ElvationChangeDetectionService_Angle()
+        {
+            var elevation = new Elevation
+            {
+                Start = new Coordinates3d
+                {
+                    Lat = 53.38349,
+                    Long = -6.09966,
+                    Elevation = 0
+                },
+                End = new Coordinates3d
+                {
+                    Lat = 53.383160,
+                    Long = -6.099228,
+                    Elevation = 100
+                },
+                Length = 5
+            };
+
+            Assert.AreEqual(87.14, elevation.Angle);
         }
     }
 }
