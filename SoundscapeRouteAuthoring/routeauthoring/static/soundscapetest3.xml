@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxsc="http://microsoft.com/Soundscape" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+	<metadata xmlns="">
+		<name>
+			Frazier's test route in Reading
+		</name>
+		<desc>
+			Route for testing the scavenger hunt in Reading
+		</desc>
+		<author>
+			<name>
+				QA Team
+			</name>
+		</author>
+		<time>
+			7/28/2020 11:21:56 AM
+		</time>
+		<extensions>
+			<meta end="1/1/2021 11:53:52 AM" start="11/1/2019 11:52:51 AM">
+				<id>
+					c713e0b491e74468b5600312291018f8
+				</id>
+				<region lat="51.4502463333333" lon="-0.948478666666667" radius="2000" />
+				<locale>
+					en-us
+				</locale>
+				<behavior>
+					ScavengerHunt
+				</behavior>
+			</meta>
+		</extensions>
+	</metadata>
+	<wpt lat="51.452833" lon="-0.948861" xmlns="">
+		<name>
+			Cemetry Junction
+		</name>
+		<desc>
+			A junction between two large roads in Reading, the name references the large cemetery whose entrance is at this junction
+		</desc>
+		<type>
+			WayPoint
+		</type>
+		<ele>
+			9
+		</ele>
+		<extensions>
+			<annotations>
+				<annotations Title="Cemetry Junction">
+					A junction between two large roads in Reading, the name references the large cemetery whose entrance is at this junction
+				</annotations>
+			</annotations>
+			<poi>
+				<street>
+					Cemetery Junction, Reading
+				</street>
+			</poi>
+		</extensions>
+	</wpt>
+	<wpt lat="51.452405" lon="-0.952123" xmlns="">
+		<name>
+			North end of Donnington Road
+		</name>
+		<desc>
+			North end of Donnington Road
+		</desc>
+		<type>
+			WayPoint
+		</type>
+		<ele>
+			9
+		</ele>
+		<extensions>
+			<annotations>
+				<annotations Title="North end of Donnington Road">
+					North end of Donnington Road
+				</annotations>
+			</annotations>
+			<poi>
+				<street>
+					North end of Donnington Road
+				</street>
+			</poi>
+		</extensions>
+	</wpt>
+	<wpt lat="51.449737" lon="-0.950664" xmlns="">
+		<name>
+			Donnington Cars
+		</name>
+		<desc>
+			Donnington Cars
+		</desc>
+		<type>
+			WayPoint
+		</type>
+		<ele>
+			9
+		</ele>
+		<extensions>
+			<annotations>
+				<annotations Title="Donnington Cars">
+					Donnington Cars
+				</annotations>
+			</annotations>
+			<poi>
+				<street>
+					Donnington Cars
+				</street>
+			</poi>
+		</extensions>
+	</wpt>
+</gpx>
