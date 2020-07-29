@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-{% load staticfiles %}
 <html>
 
 <head>
@@ -25,8 +24,9 @@
 
 
 <script>
+  
   document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.collapsible');
+    var elems = document.querySeelectorAll('.collapsible');
     var instances = M.Collapsible.init(elems, options);
   });
 
@@ -50,6 +50,7 @@
 
   function populatePreviewHeaders() {
     //Retreieves data from XML document and places in Javascript objects
+    console.log("The data is" + '{{json_data}}');
     wpts = readXml();
     var names = new Array(wpts.length);
     var descriptions = new Array(wpts.length);
@@ -133,7 +134,7 @@
                  </div>
               </div>
            </div>
-           <button type="submit" value="Upload File" class="waves-effect waves-light btn-large" onclick="populatePreviewHeaders()">Generate Experience</button>
+           <button type="submit" value="Upload File" class="waves-effect waves-light btn-large">Generate Experience</button>
         </form>
      </div>
     </div>
@@ -145,6 +146,12 @@
         <p style="font-size: 20px;">Preview</p>
 
         <ul class="collapsible">
+          {% for item in json_data %}
+          <li>
+            <div id = "first-header" class="collapsible-header"></div>
+            <div class="collapsible-body"><span></span></div>
+          </li>
+          {% endfor %}
           <!-- this is our menu of collapsible items -->
             <!-- <li>
               <div id = "first-header" class="collapsible-header">Elevation Marker 1</div>
