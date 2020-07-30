@@ -27,7 +27,7 @@ def handle_uploaded_gpx(file, filename):
     positionData = callConversionApi(content)
     if positionData is None:
          raise Exception('No position data could be found')
-    elevationSegments = callElevationApi(positionData)
+    elevationSegments = callElevationApi(positionData, 8)
     if elevationSegments is None:
          raise Exception('No elevation segments were generated')
     return elevationSegments
@@ -43,4 +43,10 @@ def processElevationPoints(elevation_data):
         else:
             uphills += 1
             item["title"] = "Uphill " + str(uphills)
-    return elevation_data
+    return filter(elevationChangeMeetsThreshold, elevation_data)
+
+def elevationChangeMeetsThreshold(elevation):
+    if(elevation['elevationChange'] > 4):
+        return True
+    else:
+        return False

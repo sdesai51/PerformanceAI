@@ -3,20 +3,22 @@ import requests
 def callConversionApi(gpxContent):
     try:
         r = requests.post("https://microsoftperformanceaiapi.azurewebsites.net/api/Conversion", data=gpxContent)
-        # print("Conversion API Call results")
-        # print(r.text)
+        print("Conversion API Call results")
+        print(r.text)
         return r.text
-    except Exception as e:
+    except Exception:
         print('Error calling Conversion API')
         return ''
 
-def callElevationApi(positionData):
+def callElevationApi(positionData, threshold):
     try:
-        r = requests.post("https://microsoftperformanceaiapi.azurewebsites.net/api/Elevation", data=positionData)
-        # print("Elevation API Call results")
-        # print(r.text)
+        apicall = 'https://microsoftperformanceaiapi.azurewebsites.net/api/Elevation?threhold={}'.format(threshold)
+        print(apicall)
+        r = requests.post(apicall, data=positionData)
+        print("Elevation API Call results")
+        print(r.text)
         return r.text
-    except Exception as e:
+    except Exception:
         print('Error calling Elevation API')
         return ''
 
@@ -27,6 +29,6 @@ def callSoundscapeGpxApi(experienceData):
         print("SoundscapeGpx API Call results")
         print(r.text)
         return r.text
-    except Exception as e:
+    except Exception:
         print('Error calling SoundscapeGpx API')
         return ''
