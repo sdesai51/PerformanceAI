@@ -18,7 +18,7 @@ Django
 - Installation Instructions (including virtual environment set up): https://docs.djangoproject.com/en/3.0/howto/windows/
  
 ## Start Route Authoring App
-- Activate virutal environment
+- Activate virtual environment
 - navigate to routeauthoring folder
 - run 'python manage.py runserver'
 
